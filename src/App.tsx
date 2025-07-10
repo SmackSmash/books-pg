@@ -3,7 +3,7 @@ import BookCreate from './components/BookCreate';
 import { useQuery } from '@tanstack/react-query';
 
 const App: FC = () => {
-  const { isFetching, error, data } = useQuery({
+  const { isPending, isError, error, data } = useQuery({
     queryKey: ['books'],
     queryFn: async () => {
       const response = await fetch('http://localhost:5000/');
