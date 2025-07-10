@@ -1,12 +1,30 @@
 import { useState, type FC, type FormEvent } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const BookCreate: FC = () => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
 
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: (book: { title: string; author: string }) => {
+      return fetch('http://localhost:5000/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8'
+        },
+        body: JSON.stringify(book)
+      });
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['books'] })
+  });
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(title, author);
+    mutation.mutate({ title, author });
+    setTitle('');
+    setAuthor('');
   };
 
   return (
@@ -37,7 +55,7 @@ const BookCreate: FC = () => {
           type='submit'
           className='cursor-pointer rounded bg-amber-300 px-4 py-2 text-amber-950'
         >
-          Submit
+          {mutation.isPending ? 'Adding to list...' : 'Submit'}
         </button>
       </form>
     </div>
