@@ -1,0 +1,7 @@
+@import 'tailwindcss';
+
+@layer {
+  body {
+    @apply bg-slate-900 text-slate-100;
+  }
+}
