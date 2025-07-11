@@ -38,6 +38,7 @@ const BookCreate: FC = () => {
           type='text'
           id='title'
           value={title}
+          placeholder='e.g. The Road'
           onChange={e => setTitle(e.target.value)}
           className='mb-4 grow rounded bg-slate-100 p-2 text-slate-950 outline-none'
         />
@@ -48,6 +49,7 @@ const BookCreate: FC = () => {
           type='text'
           id='author'
           value={author}
+          placeholder='e.g. Cormac McCarthy'
           onChange={e => setAuthor(e.target.value)}
           className='mb-4 grow rounded bg-slate-100 p-2 text-slate-950 outline-none'
         />
