@@ -1,6 +1,7 @@
 import type { FC } from 'react';
 import BookCreate from './components/BookCreate';
 import { useQuery } from '@tanstack/react-query';
+import BookList from './components/BookList';
 
 const App: FC = () => {
   const {
@@ -23,14 +24,9 @@ const App: FC = () => {
       <h1 className='mb-2 border-b-2 border-b-slate-600 pb-2 text-2xl font-extrabold'>
         Reading List
       </h1>
-      <div>
-        {isPending && <p>Loading...</p>}
-        {isError && <p>{error.message}</p>}
-        {books &&
-          books.map((book: { title: string; author: string }) => (
-            <p key={book.title}>{book.title}</p>
-          ))}
-      </div>
+      {isPending && <p>Loading...</p>}
+      {isError && <p>{error.message}</p>}
+      {books && books.length ? <BookList books={books} /> : <p>No books to show</p>}
       <BookCreate />
     </div>
   );
