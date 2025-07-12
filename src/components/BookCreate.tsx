@@ -2,14 +2,13 @@ import { useState, type FC, type FormEvent } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const BookCreate: FC = () => {
-  const [title, setTitle] = useState('');
-  const [author, setAuthor] = useState('');
+  const [formState, setFormState] = useState({ title: '', author: '' });
 
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
     mutationFn: (book: { title: string; author: string }) => {
-      return fetch('http://localhost:5000/', {
+      return fetch('http://localhost:5000/books', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json; charset=utf-8'
@@ -22,9 +21,8 @@ const BookCreate: FC = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    mutation.mutate({ title, author });
-    setTitle('');
-    setAuthor('');
+    mutation.mutate(formState);
+    setFormState({ title: '', author: '' });
   };
 
   return (
@@ -37,9 +35,9 @@ const BookCreate: FC = () => {
         <input
           type='text'
           id='title'
-          value={title}
+          value={formState.title}
           placeholder='e.g. The Road'
-          onChange={e => setTitle(e.target.value)}
+          onChange={e => setFormState({ ...formState, title: e.target.value })}
           className='mb-4 grow rounded bg-slate-100 p-2 text-slate-950 outline-none'
         />
         <label htmlFor='author' className='mb-2'>
@@ -48,9 +46,9 @@ const BookCreate: FC = () => {
         <input
           type='text'
           id='author'
-          value={author}
+          value={formState.author}
           placeholder='e.g. Cormac McCarthy'
-          onChange={e => setAuthor(e.target.value)}
+          onChange={e => setFormState({ ...formState, author: e.target.value })}
           className='mb-4 grow rounded bg-slate-100 p-2 text-slate-950 outline-none'
         />
         <button

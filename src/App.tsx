@@ -12,7 +12,7 @@ const App: FC = () => {
   } = useQuery({
     queryKey: ['books'],
     queryFn: async () => {
-      const response = await fetch('http://localhost:5000/');
+      const response = await fetch('http://localhost:5000/books');
       const data = await response.json();
       console.log(data);
       return data;
@@ -26,7 +26,7 @@ const App: FC = () => {
       </h1>
       {isPending && <p>Loading...</p>}
       {isError && <p>{error.message}</p>}
-      {books && books.length ? <BookList books={books} /> : <p>No books to show</p>}
+      {books && <BookList books={books} />}
       <BookCreate />
     </div>
   );
