@@ -14,3 +14,9 @@ export const addBook = (book: { title: string; author: string }) => {
     body: JSON.stringify(book)
   });
 };
+
+export const deleteBook = (id: number) => {
+  return fetch(`http://localhost:5000/books/${id}`, {
+    method: 'DELETE'
+  });
+};

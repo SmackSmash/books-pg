@@ -7,14 +7,14 @@ const BookCreate: FC = () => {
 
   const queryClient = useQueryClient();
 
-  const mutation = useMutation({
+  const addBookMutation = useMutation({
     mutationFn: addBook,
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['books'] })
   });
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    mutation.mutate(formState);
+    addBookMutation.mutate(formState);
     setFormState({ title: '', author: '' });
   };
 
@@ -48,7 +48,7 @@ const BookCreate: FC = () => {
           type='submit'
           className='cursor-pointer rounded bg-amber-300 px-4 py-2 text-amber-950'
         >
-          {mutation.isPending ? 'Adding to list...' : 'Submit'}
+          {addBookMutation.isPending ? 'Adding to list...' : 'Submit'}
         </button>
       </form>
     </div>
