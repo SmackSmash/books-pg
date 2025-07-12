@@ -1,11 +1,14 @@
-import type { FC } from 'react';
+import { useState, type FC } from 'react';
 import type { Book } from '../types';
 import BookImage from '../assets/Closed_Book_Icon.svg';
-import { IoClose } from 'react-icons/io5';
+import { IoPencilSharp, IoClose } from 'react-icons/io5';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteBook } from '../api';
+import BookEdit from './BookEdit';
 
 const BookShow: FC<{ book: Book }> = ({ book: { id, title, author } }) => {
+  const [showEdit, setshowEdit] = useState(false);
+
   const queryClient = useQueryClient();
 
   const deleteBookMutation = useMutation({
@@ -26,9 +29,21 @@ const BookShow: FC<{ book: Book }> = ({ book: { id, title, author } }) => {
       >
         <IoClose />
       </button>
-      <img src={BookImage} alt='Book icon' className='mx-auto w-2/3' />
-      <h2 className='mt-2 text-center font-bold'>{title}</h2>
-      <h3 className='text-center'>{author}</h3>
+      <button
+        onClick={() => setshowEdit(!showEdit)}
+        className='absolute top-2 left-2 cursor-pointer rounded-full p-0.5 text-xl text-slate-100 hover:bg-slate-100 hover:text-slate-800'
+      >
+        <IoPencilSharp />
+      </button>
+      <img src={BookImage} alt='Book icon' className='mx-auto mb-4 w-2/3' />
+      {showEdit ? (
+        <BookEdit />
+      ) : (
+        <>
+          <h3 className='text-center'>{author}</h3>
+          <h2 className='mt-2 text-center font-bold'>{title}</h2>
+        </>
+      )}
     </div>
   );
 };
