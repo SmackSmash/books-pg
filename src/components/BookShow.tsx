@@ -6,7 +6,9 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteBook } from '../api';
 import BookEdit from './BookEdit';
 
-const BookShow: FC<{ book: Book }> = ({ book: { id, title, author } }) => {
+const BookShow: FC<{ book: Book }> = ({ book }) => {
+  const { id, title, author } = book;
+
   const [showEdit, setshowEdit] = useState(false);
 
   const queryClient = useQueryClient();
@@ -37,7 +39,7 @@ const BookShow: FC<{ book: Book }> = ({ book: { id, title, author } }) => {
       </button>
       <img src={BookImage} alt='Book icon' className='mx-auto mb-4 w-2/3' />
       {showEdit ? (
-        <BookEdit />
+        <BookEdit book={book} />
       ) : (
         <>
           <h3 className='text-center'>{author}</h3>
