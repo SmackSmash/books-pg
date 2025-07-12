@@ -1,5 +1,6 @@
 import { useState, type FC, type FormEvent } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { addBook } from '../api';
 
 const BookCreate: FC = () => {
   const [formState, setFormState] = useState({ title: '', author: '' });
@@ -7,15 +8,7 @@ const BookCreate: FC = () => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: (book: { title: string; author: string }) => {
-      return fetch('http://localhost:5000/books', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json; charset=utf-8'
-        },
-        body: JSON.stringify(book)
-      });
-    },
+    mutationFn: addBook,
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['books'] })
   });
 

@@ -1,6 +1,7 @@
 import type { FC } from 'react';
 import BookCreate from './components/BookCreate';
 import { useQuery } from '@tanstack/react-query';
+import { getBooks } from './api';
 import BookList from './components/BookList';
 
 const App: FC = () => {
@@ -11,12 +12,7 @@ const App: FC = () => {
     data: books
   } = useQuery({
     queryKey: ['books'],
-    queryFn: async () => {
-      const response = await fetch('http://localhost:5000/books');
-      const data = await response.json();
-      console.log(data);
-      return data;
-    }
+    queryFn: getBooks
   });
 
   return (
