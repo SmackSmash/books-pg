@@ -33,7 +33,7 @@ const BookShow: FC<{ book: Book }> = ({ book }) => {
       </button>
       <button
         onClick={() => setshowEdit(!showEdit)}
-        className='absolute top-2 left-2 cursor-pointer rounded-full p-0.5 text-xl text-slate-100 hover:bg-slate-100 hover:text-slate-800'
+        className={`absolute top-2 left-2 cursor-pointer rounded-full p-0.5 text-xl text-slate-100 hover:bg-slate-100 hover:text-slate-800 [&.active]:bg-slate-100 [&.active]:text-slate-800 ${showEdit && 'active'}`}
       >
         <IoPencilSharp />
       </button>

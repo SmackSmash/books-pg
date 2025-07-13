@@ -1,3 +1,5 @@
+import type { Book } from '../types';
+
 export const getBooks = async () => {
   const response = await fetch('http://localhost:5000/books');
   const data = await response.json();
@@ -11,6 +13,16 @@ export const addBook = (book: { title: string; author: string }) => {
       'Content-Type': 'application/json; charset=utf-8'
     },
     body: JSON.stringify(book)
+  });
+};
+
+export const editBook = ({ id, title, author }: Book) => {
+  return fetch(`http://localhost:5000/books/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/jsom; charset=utf-8'
+    },
+    body: JSON.stringify({ title, author })
   });
 };
 
