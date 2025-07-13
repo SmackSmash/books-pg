@@ -1,12 +1,27 @@
-import { useState, type FC, type FormEvent } from 'react';
+import { useState, type Dispatch, type FC, type FormEvent, type SetStateAction } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import type { Book } from '../types';
+import { editBook } from '../api';
 
-const BookEdit: FC<{ book: Book }> = ({ book: { id, title, author } }) => {
+const BookEdit: FC<{ book: Book; setShowEdit: Dispatch<SetStateAction<boolean>> }> = ({
+  book: { id, title, author },
+  setShowEdit
+}) => {
   const [formState, setFormState] = useState({ title, author });
+
+  const queryClient = useQueryClient();
+
+  const editMutation = useMutation({
+    mutationFn: () => editBook({ id, ...formState }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['books'] });
+      setShowEdit(false);
+    }
+  });
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formState);
+    editMutation.mutate();
   };
 
   return (

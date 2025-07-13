@@ -9,7 +9,7 @@ import BookEdit from './BookEdit';
 const BookShow: FC<{ book: Book }> = ({ book }) => {
   const { id, title, author } = book;
 
-  const [showEdit, setshowEdit] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
 
   const queryClient = useQueryClient();
 
@@ -32,14 +32,14 @@ const BookShow: FC<{ book: Book }> = ({ book }) => {
         <IoClose />
       </button>
       <button
-        onClick={() => setshowEdit(!showEdit)}
+        onClick={() => setShowEdit(!showEdit)}
         className={`absolute top-2 left-2 cursor-pointer rounded-full p-0.5 text-xl text-slate-100 hover:bg-slate-100 hover:text-slate-800 [&.active]:bg-slate-100 [&.active]:text-slate-800 ${showEdit && 'active'}`}
       >
         <IoPencilSharp />
       </button>
       <img src={BookImage} alt='Book icon' className='mx-auto mb-4 w-2/3' />
       {showEdit ? (
-        <BookEdit book={book} />
+        <BookEdit book={book} setShowEdit={setShowEdit} />
       ) : (
         <>
           <h3 className='text-center'>{author}</h3>
